@@ -1,18 +1,13 @@
-import net.glxn.qrgen.javase.QRCode
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.imageio.ImageIO
 
+
 fun main(args: Array<String>) {
-    val stream: ByteArrayOutputStream = QRCode
-        .from("Hello World")
-        .withSize(250, 250)
-        .stream()
-    val bis = ByteArrayInputStream(stream.toByteArray())
+    val qrCode = createQRCode("itemName: Sample_Item; price: PHP_100", "Sample Item", "Price: ₱100")
 
     val outputFile = File("modified_image.jpg")
-    ImageIO.write(ImageIO.read(bis), "jpg", outputFile)
+    ImageIO.write(qrCode, "jpg", outputFile)
 
-//    println(ImageIO.read(bis))
+    val sampleImageFromInternet = File("sample-bardcode-image-from-internet.jpg")
+    println(decodeQRCode(ImageIO.read(sampleImageFromInternet)))
 }
